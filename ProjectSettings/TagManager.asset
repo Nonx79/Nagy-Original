@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Unit
+  - Tile
+  - MovePlate
+  - Grid
+  - Move Grid
+  - Structure
+  - Selected Grid
+  - Attack Grid
+  - Map
+  - Music
+  - Fire
+  - Restrictions
+  - Camera
+  - Position
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Grass
+  - Grid
+  - Unit
+  - Minimap
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Grass
+    uniqueID: 1069257115
+    locked: 0
+  - name: Fire
+    uniqueID: 423984255
+    locked: 0
+  - name: Grid
+    uniqueID: 30628315
+    locked: 0
+  - name: Unit
+    uniqueID: 2127736697
+    locked: 0
+  - name: UI
+    uniqueID: 2652466533
+    locked: 0
+  - name: GameOver
+    uniqueID: 3073232703
+    locked: 0
