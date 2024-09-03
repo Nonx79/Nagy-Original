@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     private void Awake()
     {
         gameMapSelection.AddOptions(Enum.GetNames(typeof(MapLevel)).ToList());
+        Screen.SetResolution(683, 384, false);
+        nm = FindObjectOfType<NetworkManager>();
     }
 
     public void LoadScene(string sceneName)

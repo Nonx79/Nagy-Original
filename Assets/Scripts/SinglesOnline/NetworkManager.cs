@@ -13,17 +13,20 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private const string POSITION = "position";
     private const int MAXPLAYER = 2;
     public GameManager gm;
-
     private MapLevel ml;
+
+    public bool multiplayer = false;
+
+    bool playerEnter = false;
 
     public enum ColorOfPlayer
     {
-        purple = 1,
-        pink = 2,
-        intensePink = 3,
-        yellow = 4,
-        lightBlue = 5,
-        orange = 6
+        purple = 0,
+        pink = 1,
+        intensePink = 2,
+        yellow = 3,
+        lightBlue = 4,
+        orange = 5
     }
 
 
@@ -32,6 +35,16 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         PhotonNetwork.AutomaticallySyncScene = true;
+    }
+
+    private void Update()
+    {
+        DontDestroyOnLoad(transform.gameObject);
+
+        if (FindObjectOfType<GameManager>() != null && gm == null)
+        {
+            gm = FindObjectOfType<GameManager>();
+        }
     }
 
     public void Connect()
@@ -43,6 +56,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         else
             PhotonNetwork.ConnectUsingSettings();
 
+        multiplayer = true;
         SceneManager.LoadScene("Map02 1");
     }
 
@@ -68,21 +82,50 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         Debug.LogError($"Join player " + PhotonNetwork.LocalPlayer.ActorNumber);
         PreparePositionSelectionoptions();
-        gm.ShowTeamSelectionScreen();
+        if (PhotonNetwork.CurrentRoom.GetPlayer(1).IsLocal)
+        {
+            gm.ShowTeamSelectionScreenFirst();
+            Debug.Log("1 player");
+            playerEnter = true;
+
+        }
+        else if (PhotonNetwork.CurrentRoom.GetPlayer(2).IsLocal)
+        {
+            gm.ShowTeamSelectionScreenSecond();
+            playerEnter = true;
+        }
     }
 
-    private void PreparePositionSelectionoptions()
+    public void PreparePositionSelectionoptions()
     {
-        if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+        if (playerEnter == true)
         {
-            var firstPlayer = PhotonNetwork.CurrentRoom.GetPlayer(1);
-            if (firstPlayer.CustomProperties.ContainsKey(POSITION))
-            {
-                var occupiedPosition = firstPlayer.CustomProperties[POSITION];
-                gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
+            Debug.Log("Estoy en nm entro el jugador");
+            if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
+            { 
+                //Primer jugador elige color
+                var firstPlayer = PhotonNetwork.CurrentRoom.GetPlayer(1);
+
+                if (firstPlayer.CustomProperties.ContainsKey(POSITION))
+                {
+                    Debug.Log("Estoy en nm color jugador 1");
+                    var occupiedPosition = firstPlayer.CustomProperties[POSITION];
+                    gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
+                }
+
+                //Segundo jugador elige color
+                var secondPlayer = PhotonNetwork.CurrentRoom.GetPlayer(2);
+
+                if (secondPlayer.CustomProperties.ContainsKey(POSITION))
+                {
+                    Debug.Log("Estoy en nm color jugador 1");
+                    var occupiedPosition = secondPlayer.CustomProperties[POSITION];
+                    gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
+                }
             }
         }
     }
+
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.LogError($"Enter player " + newPlayer.ActorNumber);

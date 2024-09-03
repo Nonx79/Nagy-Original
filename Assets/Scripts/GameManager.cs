@@ -5,11 +5,12 @@ using TMPro;
 using UnityEngine.SceneManagement;
 using Unity.VisualScripting;
 using Photon.Pun;
-using UnityEditor.U2D.Path.GUIFramework;
 using static NetworkManager;
 using UnityEngine.UI;
+using ExitGames.Client.Photon;
+using Photon.Realtime;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     //Players
     public int currPlayer = 1;
@@ -143,6 +144,14 @@ public class GameManager : MonoBehaviour
 
     //Online
     NetworkManager nm;
+    bool multiplayer = false;
+    public bool player1Ready = false;
+    public bool player2Ready = false;
+    public Canvas canvasWait;
+
+    //chatgpt
+    private const byte MarkObjectEvent = 1;
+    private bool objectUsed = false;
 
     private void Awake()
     {
@@ -159,6 +168,18 @@ public class GameManager : MonoBehaviour
         prevClime.text = climes[0];
         clime.text = climes[0];
         PhotonNetwork.AutomaticallySyncScene = true;
+        nm = FindObjectOfType<NetworkManager>();
+        if (nm.multiplayer == true)
+            multiplayer = true;
+
+        //Multiplayer canvas
+        PhotonNetwork.NetworkingClient.EventReceived += OnEvent;
+
+        //Colors button
+        /*
+        purple.interactable = false;
+        pink.interactable = false;
+        */
     }
 
     public void Update()
@@ -168,9 +189,9 @@ public class GameManager : MonoBehaviour
         {
             CursorUIUpdate();
             UnitUIUpdate();
-        }                
+        }
 
-        if(player1.transform.childCount != intUnits01)
+        if (player1.transform.childCount != intUnits01)
         {
             UpdateUnits();
         }
@@ -178,6 +199,17 @@ public class GameManager : MonoBehaviour
         if (player2.transform.childCount != intUnits02)
         {
             UpdateUnits();
+        }
+        /*
+        if (purple != null)
+        {
+            nm.PreparePositionSelectionoptions();
+        }
+        */
+        //Online Colors
+        if ((player2Commander == null && player1Commander == null) && canvasWait.enabled == false)
+        {
+
         }
     }
 
@@ -729,6 +761,7 @@ public class GameManager : MonoBehaviour
         }
         colorUnit = "Purple";
         UpdateColors();
+        SelectColor(0);
     }
 
     public void ColorPink()
@@ -755,6 +788,7 @@ public class GameManager : MonoBehaviour
         }
         colorUnit = "Pink";
         UpdateColors();
+        SelectColor(1);
     }
 
     public void ColorIntensePink()
@@ -781,6 +815,7 @@ public class GameManager : MonoBehaviour
         }
         colorUnit = "IntensePink";
         UpdateColors();
+        SelectColor(2);
     }
 
     public void ColorYellow()
@@ -807,6 +842,7 @@ public class GameManager : MonoBehaviour
         }
         colorUnit = "Yellow";
         UpdateColors();
+        SelectColor(3);
     }
 
     public void ColorLightBlue()
@@ -833,6 +869,7 @@ public class GameManager : MonoBehaviour
         }
         colorUnit = "LightBlue";
         UpdateColors();
+        SelectColor(4);
     }
 
     public void ColorOrange()
@@ -859,6 +896,7 @@ public class GameManager : MonoBehaviour
         }
         colorUnit = "Orange";
         UpdateColors();
+        SelectColor(5);        
     }
 
     public void Confirm()
@@ -868,15 +906,44 @@ public class GameManager : MonoBehaviour
             commander.text = "";
             faction.text = "";
             canvasPlayer1.enabled = false;
-            canvasPlayer2.enabled = true;
+            canvasWait.enabled = true;
+            if (multiplayer != true)
+                canvasPlayer2.enabled = true;
+            else
+            {
+                player1Ready = true;
+            }                
             colorUnit = "Purple";
-            
-        }
-        else if (canvasPlayer2.enabled == true && totalPlayers >= 3)
-        {
 
+            PhotonNetwork.RaiseEvent(MarkObjectEvent, player1Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
+
+            Debug.Log("Player 2 ready: " + player2Ready);
+
+            if (player2Ready == true && player1Ready == true)
+            {
+                canvasWait.enabled = false;
+            }
         }
-        else if (player2Commander != null)
+        else if (canvasPlayer2.enabled != false && player2Commander != null)
+        {
+            commander.text = "";
+            faction.text = "";
+            canvasPlayer2.enabled = false;
+            player2Ready = true;
+            canvasWait.enabled = true;
+
+            PhotonNetwork.RaiseEvent(MarkObjectEvent, player2Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
+
+            Debug.Log("Player 1 ready: " + player1Ready);
+
+            if (player2Ready == true && player1Ready == true)
+            {
+                canvasWait.enabled = false;
+            }
+        }
+        if ((player2Commander != null && player1Commander != null)
+            && canvasWait.enabled == true
+            )
         {
             Destroy(canvasPlayer1.transform.gameObject);
             Destroy(canvasPlayer2.transform.gameObject);
@@ -884,6 +951,8 @@ public class GameManager : MonoBehaviour
 
             GameObject obj1 = Instantiate(player1Commander, map.positionCommander1.transform.position, Quaternion.identity);            
             GameObject obj2 = Instantiate(player2Commander, map.positionCommander2.transform.position, Quaternion.identity);
+
+            Debug.Log("Crea unidades! " + player1Commander + "" + player2Commander);
 
             Destroy(map.positionCommander1);
             Destroy(map.positionCommander2);            
@@ -1012,19 +1081,82 @@ public class GameManager : MonoBehaviour
         unit2.text = intUnits02.ToString();
     }
 
-    public void ShowTeamSelectionScreen()
+    public void ShowTeamSelectionScreenFirst()
     {
-
+        canvasPlayer1.enabled = true;
+        canvasPlayer2.enabled = false;
     }
 
-    public void SelectCmd()
+    public void ShowTeamSelectionScreenSecond()
     {
+        canvasPlayer2.enabled = true;
+        canvasPlayer1.enabled = false;
+    }
 
+    public void SelectColor(int color)
+    {
+        nm.SelectPosition(color);
     }
 
     public void RestricPositionChoise(ColorOfPlayer occupiedPosition)
     {
-        var buttonToDesactivate = occupiedPosition == ColorOfPlayer.purple ? purple : pink;
-        buttonToDesactivate.interactable = false;
+        if (occupiedPosition == ColorOfPlayer.purple)
+        {
+            purple.interactable = false;
+        }
+        else
+        {
+            purple.interactable = true;
+        }
+        if (occupiedPosition == ColorOfPlayer.pink)
+        {
+            pink.interactable = false;
+        }
+        else
+        {
+            pink.interactable = true;
+        }
+        if (occupiedPosition == ColorOfPlayer.intensePink)
+        {
+            intensePink.interactable = false;
+        }
+        else
+        {
+            intensePink.interactable = true;
+        }
+        if (occupiedPosition == ColorOfPlayer.yellow)
+        {
+            amarillo.interactable = false;
+        }
+        else
+        {
+            amarillo.interactable = true;
+        }
+        if (occupiedPosition == ColorOfPlayer.lightBlue)
+        {
+            lightBlue.interactable = false;
+        }
+        else
+        {
+            lightBlue.interactable = true;
+        }
+        if (occupiedPosition == ColorOfPlayer.orange)
+        {
+            naranjo.interactable = false;
+        }
+        else
+        {
+            naranjo.interactable = true;
+        }
+    }
+
+    void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == MarkObjectEvent)
+        {
+            // Lógica para manejar el evento
+            player1Ready = (bool)photonEvent.CustomData;
+            player2Ready = (bool)photonEvent.CustomData;
+        }
     }
 }
