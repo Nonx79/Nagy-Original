@@ -76,7 +76,7 @@ public abstract class TileMap : MonoBehaviour
     void Start()
     {
         Application.targetFrameRate = 60;
-        normalCamera.transform.position = new Vector3(mapSizeX / 2, mapSizeY / 4.5f, -10);
+        normalCamera.transform.position = new Vector3(mapSizeX / 2, mapSizeY / 2f, -10);
         minimap.transform.position = new Vector3(mapSizeX / 2, mapSizeY / 2, -10);
         GeneratePathfindingGraph();
         SetIfTileIsOccupied();

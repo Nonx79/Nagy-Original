@@ -162,7 +162,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4705996282990509643}
   - component: {fileID: 4705996282990509646}
-  - component: {fileID: 4705996282990509642}
   - component: {fileID: 4705996282990509641}
   - component: {fileID: 4705996282990509647}
   - component: {fileID: 4705996282990509645}
@@ -209,117 +208,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 4705996282990509645}
-  gm: {fileID: 4705996282990509642}
+  gm: {fileID: 0}
   positionPlayer11: {fileID: 0}
   positionPlayer12: {fileID: 0}
   positionPlayer21: {fileID: 0}
   positionPlayer22: {fileID: 0}
   positionPlayer23: {fileID: 0}
   sc: {fileID: 8255377320452692870, guid: af257ba515a545043880a7c5b8a7f1fc, type: 3}
---- !u!114 &4705996282990509642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4705996282990508469}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c6cfcea59ec77041b4b0260f287a3b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currPlayer: 1
-  totalPlayers: 2
-  player1: {fileID: 0}
-  player2: {fileID: 0}
-  moneyPlayer1: 1000
-  moneyPlayer2: 1000
-  incomePlayer1: 0
-  incomePlayer2: 0
-  unitsPlayer1: 0
-  unitsWaitPlayer1: 0
-  unitsPlayer2: 0
-  unitsWaitPlayer2: 0
-  Players: []
-  factionChoose1: 0
-  factionChoose2: 1
-  map: {fileID: 4705996282990509645}
-  ia: {fileID: 4705996282990509647}
-  cursorX: 0
-  cursorY: 0
-  selectedXTile: 0
-  selectedYTile: 0
-  UIunitCanvas: {fileID: 0}
-  canvasPlayers: {fileID: 0}
-  canvasPlayer1: {fileID: 0}
-  canvasPlayer2: {fileID: 0}
-  unitBeingDisplayed: {fileID: 0}
-  structureBeingDisplayed: {fileID: 0}
-  tileBeingDisplayed: {fileID: 0}
-  displayingUnitInfo: 0
-  battleInfo: 0
-  UIUnitCurrentHealth: {fileID: 0}
-  UIUnitPower: {fileID: 0}
-  UIunitSprite: {fileID: 0}
-  day: {fileID: 0}
-  moneyP1: {fileID: 0}
-  moneyP2: {fileID: 0}
-  incomeTextP1: {fileID: 0}
-  incomeTextP2: {fileID: 0}
-  unit1: {fileID: 0}
-  unit2: {fileID: 0}
-  unitP1: {fileID: 0}
-  unitP2: {fileID: 0}
-  prevClime: {fileID: 0}
-  clime: {fileID: 0}
-  nextClime: {fileID: 0}
-  battle01: {fileID: 0}
-  battle02: {fileID: 0}
-  commander: {fileID: 0}
-  faction: {fileID: 0}
-  intUnits01: 0
-  intUnits02: 0
-  mSoldier: {fileID: -4715680920111249750, guid: dc2692ee1cc84df42bca560387a2ef21, type: 3}
-  pSoldier: {fileID: -2948124566753476221, guid: 4a8cebd71b11d1046ba96f2c965d72db, type: 3}
-  rSoldier: {fileID: 2044272942075826486, guid: 6cc8ea699fa27c84c9a19920a00906af, type: 3}
-  bottonPrefab: {fileID: 0}
-  heart1: {fileID: 0}
-  heart2: {fileID: 0}
-  sword1: {fileID: 0}
-  sword2: {fileID: 0}
-  face1: {fileID: 0}
-  face2: {fileID: 0}
-  unitsCount01: {fileID: 0}
-  unitsCount02: {fileID: 0}
-  UI: {fileID: 0}
-  selectColor1: {r: 0, g: 0, b: 0, a: 0}
-  selectColor2: {r: 0, g: 0, b: 0, a: 0}
-  morado: {r: 0.2627451, g: 0.01568628, b: 0.345098, a: 1}
-  rosaIntenso: {r: 0.7490196, g: 0.01176471, b: 2901961, a: 1}
-  rosa: {r: 0.7490196, g: 0.01176471, b: 0.2901961, a: 1}
-  azulClaro: {r: 0.2627451, g: 1, b: 1, a: 1}
-  yellow: {r: 0.8431373, g: 0.8117648, b: 0.1333333, a: 1}
-  orange: {r: 0.8584906, g: 0.1727545, b: 0, a: 1}
-  colorUnit: 
-  player1Commander: {fileID: 0}
-  player2Commander: {fileID: 0}
-  sniperCommander: {fileID: 8689583271610240327, guid: ff1c6bcb588f0804fb98a30e2452a6fb, type: 3}
-  mechanicCommander: {fileID: 7592252662858967433, guid: 39ea8c37a38cdb04695925b5e4bcd9c1, type: 3}
-  IAPlayer1: 0
-  IAPlayer2: 0
-  track1: {fileID: 4197381476766609170, guid: b5c20a59301dc744eac4191f3793e8c5, type: 3}
-  track2: {fileID: 4999011716537390822, guid: dd4cdb644e05070408d2040390af3bac, type: 3}
-  creation: 0
-  c: {fileID: 0}
-  purple: {fileID: 0}
-  pink: {fileID: 0}
-  intensePink: {fileID: 0}
-  amarillo: {fileID: 0}
-  lightBlue: {fileID: 0}
-  naranjo: {fileID: 0}
-  player1Ready: 0
-  player2Ready: 0
-  canvasWait: {fileID: 0}
 --- !u!114 &4705996282990509641
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 596d1ff2c6c6a6c4095de4ed12482fdc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gm: {fileID: 4705996282990509642}
+  gm: {fileID: 0}
   map: {fileID: 4705996282990509645}
 --- !u!114 &4705996282990509647
 MonoBehaviour:
@@ -348,7 +243,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   structure: {fileID: 0}
   map: {fileID: 4705996282990509645}
-  gm: {fileID: 4705996282990509642}
+  gm: {fileID: 0}
   bm: {fileID: 4705996282990509641}
   unitsToAttack: []
   unitToAttack: {fileID: 0}
@@ -390,7 +285,7 @@ MonoBehaviour:
     tileVisualPrefab: {fileID: 11400000, guid: dcf6a12e5749a1644b8e2d165aaab7e1, type: 2}
     isWalkable: 0
     movementCost: 1
-  gm: {fileID: 4705996282990509642}
+  gm: {fileID: 0}
   bm: {fileID: 4705996282990509641}
   ground: {fileID: 4705996284434189311}
   mapSizeX: 19
