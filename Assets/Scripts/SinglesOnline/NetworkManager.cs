@@ -14,10 +14,13 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private const int MAXPLAYER = 2;
     public GameManager gm;
     private MapLevel ml;
+    bool playerEnter = false;
+
+    //Color
+    bool firstTimePlayerOne = false;
+    bool firstTimePlayerTwo = false;
 
     public bool multiplayer = false;
-
-    bool playerEnter = false;
 
     public enum ColorOfPlayer
     {
@@ -77,7 +80,6 @@ public class NetworkManager : MonoBehaviourPunCallbacks
             CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { MAP, ml } },
         });
     }
-
     public override void OnJoinedRoom()
     {
         Debug.LogError($"Join player " + PhotonNetwork.LocalPlayer.ActorNumber);
@@ -96,34 +98,42 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         }
     }
 
+
     public void PreparePositionSelectionoptions()
     {
         if (playerEnter == true)
         {
-            Debug.Log("Estoy en nm entro el jugador");
             if (PhotonNetwork.CurrentRoom.PlayerCount > 1)
-            { 
-                //Primer jugador elige color
+            {
                 var firstPlayer = PhotonNetwork.CurrentRoom.GetPlayer(1);
-
-                if (firstPlayer.CustomProperties.ContainsKey(POSITION))
+                var secondPlayer = PhotonNetwork.CurrentRoom.GetPlayer(2);
+                
+                //Primer jugador elige color
+                if (!firstPlayer.IsLocal)
                 {
-                    Debug.Log("Estoy en nm color jugador 1");
+                    if (firstTimePlayerOne == false)
+                    {
+                        firstPlayer.CustomProperties[POSITION] = 0;
+                        firstTimePlayerOne = true;
+                    }
                     var occupiedPosition = firstPlayer.CustomProperties[POSITION];
                     gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
                 }
 
-                //Segundo jugador elige color
-                var secondPlayer = PhotonNetwork.CurrentRoom.GetPlayer(2);
-
-                if (secondPlayer.CustomProperties.ContainsKey(POSITION))
+                //Segundo jugador elige color               
+                if (!secondPlayer.IsLocal)
                 {
-                    Debug.Log("Estoy en nm color jugador 1");
+                    if (firstTimePlayerTwo == false)
+                    {
+                        secondPlayer.CustomProperties[POSITION] = 1;
+                        firstTimePlayerTwo = true;
+                    }
                     var occupiedPosition = secondPlayer.CustomProperties[POSITION];
                     gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
                 }
             }
         }
+       
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -142,5 +152,18 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.LocalPlayer.SetCustomProperties(new ExitGames.Client.Photon.Hashtable { { POSITION, num } });
     }
+
+    /*
+    public void ChooseColor(ColorOfPlayer chosenColor)
+    {
+        // Actualizar las propiedades personalizadas del jugador
+        ExitGames.Client.Photon.Hashtable playerProps = new ExitGames.Client.Photon.Hashtable
+    {
+        { "POSITION", chosenColor } // Actualizamos la clave "POSITION" con el color elegido
+    };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(playerProps); // Sincronizar con Photon
+    }
+    */
+
     #endregion
 }

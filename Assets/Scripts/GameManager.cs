@@ -9,6 +9,7 @@ using static NetworkManager;
 using UnityEngine.UI;
 using ExitGames.Client.Photon;
 using Photon.Realtime;
+using System.ComponentModel;
 
 public class GameManager : MonoBehaviourPun
 {
@@ -39,8 +40,8 @@ public class GameManager : MonoBehaviourPun
     public IA ia;
 
     //Raycast
-    private Ray ray;
-    private RaycastHit hit;
+    public Ray ray;
+    public RaycastHit hit;
 
     //Cursor Info for tileMapScript
     public int cursorX;
@@ -143,16 +144,18 @@ public class GameManager : MonoBehaviourPun
     public Button purple, pink, intensePink, amarillo, lightBlue, naranjo;
 
     //Online
-    NetworkManager nm;
+    public NetworkManager nm;
     bool multiplayer = false;
     public bool player1Ready = false;
     public bool player2Ready = false;
     public Canvas canvasWait;
+    //public bool colorOnline = false;
+    public bool playerEnter = false;
 
     //chatgpt
     private const byte MarkObjectEvent = 1;
     private bool objectUsed = false;
-
+   
     private void Awake()
     {
         selectColor1 = morado;
@@ -184,6 +187,7 @@ public class GameManager : MonoBehaviourPun
 
     public void Update()
     {
+        Debug.Log("penes");
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
@@ -200,11 +204,13 @@ public class GameManager : MonoBehaviourPun
         {
             UpdateUnits();
         }
+
         /*
-        if (purple != null)
+        if (colorOnline == true)
         {
+            Debug.Log("Aqui");
             nm.PreparePositionSelectionoptions();
-        }
+        } 
         */
         //Online Colors
         if ((player2Commander == null && player1Commander == null) && canvasWait.enabled == false)
@@ -628,6 +634,7 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
+    //ia or player
     public void IAPlayer()
     {
         if (canvasPlayer1.enabled == true)
@@ -652,17 +659,6 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
-    void ClimesUpdate()
-    {
-        int r = Random.Range(0, climes.Length);
-        if(currPlayer == 1)
-        {
-            prevClime.text = clime.text;
-            clime.text = nextClime.text;
-            nextClime.text = climes[r];          
-        }
-    }
-
     void DayUpdate(int x)
     {
         if (currPlayer == 1)
@@ -672,6 +668,7 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
+    //climas
     void ClimesDoSomething()
     {
         GameObject[] units = GameObject.FindGameObjectsWithTag("Unit");
@@ -712,6 +709,17 @@ public class GameManager : MonoBehaviourPun
                     u.GetComponent<Unit>().minAtkRange = u.GetComponent<Unit>().maxAtkRange;
                 }
                 break;
+        }
+    }
+
+    void ClimesUpdate()
+    {
+        int r = Random.Range(0, climes.Length);
+        if (currPlayer == 1)
+        {
+            prevClime.text = clime.text;
+            clime.text = nextClime.text;
+            nextClime.text = climes[r];
         }
     }
 
@@ -762,6 +770,7 @@ public class GameManager : MonoBehaviourPun
         colorUnit = "Purple";
         UpdateColors();
         SelectColor(0);
+        nm.PreparePositionSelectionoptions();
     }
 
     public void ColorPink()
@@ -789,6 +798,7 @@ public class GameManager : MonoBehaviourPun
         colorUnit = "Pink";
         UpdateColors();
         SelectColor(1);
+        nm.PreparePositionSelectionoptions();
     }
 
     public void ColorIntensePink()
@@ -816,6 +826,7 @@ public class GameManager : MonoBehaviourPun
         colorUnit = "IntensePink";
         UpdateColors();
         SelectColor(2);
+        nm.PreparePositionSelectionoptions();
     }
 
     public void ColorYellow()
@@ -843,6 +854,7 @@ public class GameManager : MonoBehaviourPun
         colorUnit = "Yellow";
         UpdateColors();
         SelectColor(3);
+        nm.PreparePositionSelectionoptions();
     }
 
     public void ColorLightBlue()
@@ -870,6 +882,7 @@ public class GameManager : MonoBehaviourPun
         colorUnit = "LightBlue";
         UpdateColors();
         SelectColor(4);
+        nm.PreparePositionSelectionoptions();
     }
 
     public void ColorOrange()
@@ -896,7 +909,8 @@ public class GameManager : MonoBehaviourPun
         }
         colorUnit = "Orange";
         UpdateColors();
-        SelectColor(5);        
+        SelectColor(5);
+        nm.PreparePositionSelectionoptions();
     }
 
     public void Confirm()
@@ -918,6 +932,7 @@ public class GameManager : MonoBehaviourPun
             PhotonNetwork.RaiseEvent(MarkObjectEvent, player1Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
 
             Debug.Log("Player 2 ready: " + player2Ready);
+
 
             if (player2Ready == true && player1Ready == true)
             {
