@@ -53,15 +53,15 @@ public class Structure : MonoBehaviour
     {
         if (gameObject.name == "Mine")
         {
-            if (gm.currPlayer == 1 && gameObject.GetComponent<Structure>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+            if (gm.currPlayer == 1 && gameObject.GetComponent<Structure>().playerNum == gm.currPlayer)
             {
-                gm.GetComponent<GameManager>().moneyPlayer1 = gm.GetComponent<GameManager>().moneyPlayer1 + 100;
-                gm.GetComponent<GameManager>().MoneyUpdate();
+                gm.moneyPlayer1 = gm.moneyPlayer1 + 100;
+                gm.MoneyUpdate();
             }
-            else if (gm.GetComponent<GameManager>().currPlayer == 2 && gameObject.GetComponent<Structure>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+            else if (gm.currPlayer == 2 && gameObject.GetComponent<Structure>().playerNum == gm.currPlayer)
             {
-                gm.GetComponent<GameManager>().moneyPlayer2 = gm.GetComponent<GameManager>().moneyPlayer2 + 100;
-                gm.GetComponent<GameManager>().MoneyUpdate();
+                gm.moneyPlayer2 += 100;
+                gm.MoneyUpdate();
             }
         }
     }
@@ -83,10 +83,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mSoldier.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mSoldierSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void MSniperBotton()
@@ -98,10 +98,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mSniper.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mSniperSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mSniperSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mSniperSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mSniperSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mSniperSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void MWagon()
@@ -113,10 +113,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mWagon.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mCarSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void MInvokeMachine()
@@ -128,10 +128,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mInvokeMachine.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mInvokeMachineSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mInvokeMachineSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mInvokeMachineSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mInvokeMachineSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mInvokeMachineSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void MMinitank()
@@ -143,10 +143,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mMinitank.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mMinitankSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mMinitankSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mMinitankSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mMinitankSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mMinitankSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void MShield()
@@ -158,10 +158,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mShield.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mShieldSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mShieldSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mShieldSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mShieldSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mShieldSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void MAssessin()
@@ -173,10 +173,10 @@ public class Structure : MonoBehaviour
         mUnitRange.text = "Range: " + (mShield.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         mAssessinSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            mAssessinSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            mAssessinSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            mAssessinSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            mAssessinSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     //Povery
@@ -189,10 +189,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pSoldier.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pSoldierSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pSoldierSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void PAnimatorBotton()
@@ -204,10 +204,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pAnimator.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pAnimatorSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pAnimatorSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pAnimatorSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pAnimatorSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pAnimatorSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void PKamikazeBotton()
@@ -219,10 +219,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pKamikaze.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pKamikazeSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pKamikazeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pKamikazeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pKamikazeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pKamikazeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void PWagon()
@@ -234,10 +234,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pWagon.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pCarSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pCarSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void PTruck()
@@ -249,10 +249,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pTruck.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pTruckSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pTruckSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pTruckSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pTruckSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pTruckSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void PRange()
@@ -264,10 +264,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pRange.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pRangeSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pRangeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pRangeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pRangeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pRangeSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     public void PMolotov()
@@ -279,10 +279,10 @@ public class Structure : MonoBehaviour
         pUnitRange.text = "Range: " + (pMolotov.GetComponent<Unit>().maxAtkRange).ToString();
         SetDisableSprites();
         pMolotovSprite.SetActive(true);
-        if (gm.GetComponent<GameManager>().currPlayer == 1)
-            pMolotovSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor1;
-        else if (gm.GetComponent<GameManager>().currPlayer == 2)
-            pMolotovSprite.transform.GetChild(0).GetComponent<Image>().color = gm.GetComponent<GameManager>().selectColor2;
+        if (gm.currPlayer == 1)
+            pMolotovSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor1;
+        else if (gm.currPlayer == 2)
+            pMolotovSprite.transform.GetChild(0).GetComponent<Image>().color = gm.um.selectColor2;
     }
 
     //Religion
@@ -293,13 +293,13 @@ public class Structure : MonoBehaviour
         switch (faction)
         {
             case 0:
-                if (gm.GetComponent<GameManager>().moneyPlayer1 >= unitToInvoke.GetComponent<Unit>().cost && gm.GetComponent<GameManager>().currPlayer == 1)
+                if (gm.moneyPlayer1 >= unitToInvoke.GetComponent<Unit>().cost && gm.currPlayer == 1)
                 {
                     transform.GetChild(0).GetComponent<Canvas>().enabled = false;
                     ActivateCollider();
                     map.finalizeMovementPositionStructure();
                 }
-                else if (gm.GetComponent<GameManager>().moneyPlayer2 >= unitToInvoke.GetComponent<Unit>().cost && gm.GetComponent<GameManager>().currPlayer == 2)
+                else if (gm.moneyPlayer2 >= unitToInvoke.GetComponent<Unit>().cost && gm.currPlayer == 2)
                 {
                     transform.GetChild(0).GetComponent<Canvas>().enabled = false;
                     ActivateCollider();
@@ -309,13 +309,13 @@ public class Structure : MonoBehaviour
                     Debug.Log("Dinero insuficiente");
                 break;
             case 1:
-                if (gm.GetComponent<GameManager>().moneyPlayer1 >= unitToInvoke.GetComponent<Unit>().cost && gm.GetComponent<GameManager>().currPlayer == 1)
+                if (gm.moneyPlayer1 >= unitToInvoke.GetComponent<Unit>().cost && gm.currPlayer == 1)
                 {
                     transform.GetChild(1).GetComponent<Canvas>().enabled = false;
                     ActivateCollider();
                     map.finalizeMovementPositionStructure();
                 }
-                else if (gm.GetComponent<GameManager>().moneyPlayer2 >= unitToInvoke.GetComponent<Unit>().cost && gm.GetComponent<GameManager>().currPlayer == 2)
+                else if (gm.moneyPlayer2 >= unitToInvoke.GetComponent<Unit>().cost && gm.currPlayer == 2)
                 {
                     transform.GetChild(1).GetComponent<Canvas>().enabled = false;
                     ActivateCollider();
@@ -325,13 +325,13 @@ public class Structure : MonoBehaviour
                     Debug.Log("Dinero insuficiente");
                 break;
             case 2:
-                if (gm.GetComponent<GameManager>().moneyPlayer1 >= unitToInvoke.GetComponent<Unit>().cost && gm.GetComponent<GameManager>().currPlayer == 1)
+                if (gm.moneyPlayer1 >= unitToInvoke.GetComponent<Unit>().cost && gm.currPlayer == 1)
                 {
                     transform.GetChild(2).GetComponent<Canvas>().enabled = false;
                     ActivateCollider();
                     map.finalizeMovementPositionStructure();
                 }
-                else if (gm.GetComponent<GameManager>().moneyPlayer2 >= unitToInvoke.GetComponent<Unit>().cost && gm.GetComponent<GameManager>().currPlayer == 2)
+                else if (gm.moneyPlayer2 >= unitToInvoke.GetComponent<Unit>().cost && gm.currPlayer == 2)
                 {
                     transform.GetChild(2).GetComponent<Canvas>().enabled = false;
                     ActivateCollider();
@@ -411,7 +411,7 @@ public class Structure : MonoBehaviour
         switch (faction)
         {
             case 0:
-                switch (gm.GetComponent<GameManager>().currPlayer)
+                switch (gm.currPlayer)
                 {
                     case 1:                      
                         costMSoldier.text = (mSoldier.GetComponent<Unit>().cost).ToString();
@@ -421,21 +421,21 @@ public class Structure : MonoBehaviour
                         costMSniper.text = (mSniper.GetComponent<Unit>().cost).ToString();
                         costMShield.text = (mShield.GetComponent<Unit>().cost).ToString();
                         costMInvokeMachine.text = (mInvokeMachine.GetComponent<Unit>().cost).ToString();                           
-                        mMoneyText.text = (gm.GetComponent<GameManager>().moneyPlayer1).ToString();
+                        mMoneyText.text = (gm.moneyPlayer1).ToString();
 
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mSoldier.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mSoldier.GetComponent<Unit>().cost)
                             costMSoldier.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mWagon.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mWagon.GetComponent<Unit>().cost)
                             costMWagon.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mAssessin.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mAssessin.GetComponent<Unit>().cost)
                             costMAssessin.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mMinitank.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mMinitank.GetComponent<Unit>().cost)
                             costMMinitank.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mSniper.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mSniper.GetComponent<Unit>().cost)
                             costMSniper.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mShield.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mShield.GetComponent<Unit>().cost)
                             costMShield.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < mInvokeMachine.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < mInvokeMachine.GetComponent<Unit>().cost)
                             costMInvokeMachine.color = Color.red;                                                                     
                         break;
                     case 2:
@@ -446,27 +446,27 @@ public class Structure : MonoBehaviour
                         costMSniper.text = (mSniper.GetComponent<Unit>().cost).ToString();
                         costMShield.text = (mShield.GetComponent<Unit>().cost).ToString();
                         costMInvokeMachine.text = (mInvokeMachine.GetComponent<Unit>().cost).ToString();
-                        mMoneyText.text = (gm.GetComponent<GameManager>().moneyPlayer1).ToString();
+                        mMoneyText.text = (gm.moneyPlayer1).ToString();
 
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mSoldier.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mSoldier.GetComponent<Unit>().cost)
                             costMSoldier.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mWagon.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mWagon.GetComponent<Unit>().cost)
                             costMWagon.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mAssessin.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mAssessin.GetComponent<Unit>().cost)
                             costMAssessin.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mMinitank.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mMinitank.GetComponent<Unit>().cost)
                             costMMinitank.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mSniper.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mSniper.GetComponent<Unit>().cost)
                             costMSniper.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mShield.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mShield.GetComponent<Unit>().cost)
                             costMShield.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < mInvokeMachine.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < mInvokeMachine.GetComponent<Unit>().cost)
                             costMInvokeMachine.color = Color.red;
                         break;
                 }
                 break;
             case 1:
-                switch (gm.GetComponent<GameManager>().currPlayer)
+                switch (gm.currPlayer)
                 {
                     case 1:
                         costPSoldier.text = (pSoldier.GetComponent<Unit>().cost).ToString();
@@ -476,21 +476,21 @@ public class Structure : MonoBehaviour
                         costPWagon.text = (pWagon.GetComponent<Unit>().cost).ToString();
                         costPAnimator.text = (pAnimator.GetComponent<Unit>().cost).ToString();
                         costPTruck.text = (pTruck.GetComponent<Unit>().cost).ToString();                                              
-                        pMoneyText.text = (gm.GetComponent<GameManager>().moneyPlayer1).ToString();
+                        pMoneyText.text = (gm.moneyPlayer1).ToString();
 
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pSoldier.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pSoldier.GetComponent<Unit>().cost)
                             costPSoldier.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pKamikaze.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pKamikaze.GetComponent<Unit>().cost)
                             costPKamikaze.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pRange.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pRange.GetComponent<Unit>().cost)
                             costPRange.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pMolotov.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pMolotov.GetComponent<Unit>().cost)
                             costPRange.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pWagon.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pWagon.GetComponent<Unit>().cost)
                             costPWagon.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pAnimator.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pAnimator.GetComponent<Unit>().cost)
                             costPAnimator.color = Color.red;                                                                       
-                        if (gm.GetComponent<GameManager>().moneyPlayer1 < pTruck.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer1 < pTruck.GetComponent<Unit>().cost)
                             costPTruck.color = Color.red;
                         break;
                     case 2:
@@ -501,21 +501,21 @@ public class Structure : MonoBehaviour
                         costPWagon.text = (pWagon.GetComponent<Unit>().cost).ToString();
                         costPAnimator.text = (pAnimator.GetComponent<Unit>().cost).ToString();
                         costPTruck.text = (pTruck.GetComponent<Unit>().cost).ToString();
-                        pMoneyText.text = (gm.GetComponent<GameManager>().moneyPlayer1).ToString();
+                        pMoneyText.text = (gm.moneyPlayer1).ToString();
 
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pSoldier.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pSoldier.GetComponent<Unit>().cost)
                             costPSoldier.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pKamikaze.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pKamikaze.GetComponent<Unit>().cost)
                             costPKamikaze.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pRange.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pRange.GetComponent<Unit>().cost)
                             costPRange.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pMolotov.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pMolotov.GetComponent<Unit>().cost)
                             costPRange.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pWagon.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pWagon.GetComponent<Unit>().cost)
                             costPWagon.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pAnimator.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pAnimator.GetComponent<Unit>().cost)
                             costPAnimator.color = Color.red;
-                        if (gm.GetComponent<GameManager>().moneyPlayer2 < pTruck.GetComponent<Unit>().cost)
+                        if (gm.moneyPlayer2 < pTruck.GetComponent<Unit>().cost)
                             costPTruck.color = Color.red;                     
                         break;
                 }

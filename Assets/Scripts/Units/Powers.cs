@@ -102,9 +102,9 @@ public class Powers : MonoBehaviour
             GameObject newUnit;
             newUnit = Instantiate(this.gameObject.GetComponent<Unit>().robotPrefab, new Vector3(boardX, boardY, 0), Quaternion.identity);
             if (this.gameObject.GetComponent<Unit>().playerNum == 1)
-                newUnit.transform.SetParent(gm.GetComponent<GameManager>().player1.transform);
+                newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer1.transform);
             else
-                newUnit.transform.SetParent(gm.GetComponent<GameManager>().player2.transform);
+                newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer2.transform);
             newUnit.GetComponent<Unit>().tileX = boardX;
             newUnit.GetComponent<Unit>().tileY = boardY;
             newUnit.GetComponent<Unit>().tileBeingOccupied = map.tilesOnMap[boardX, boardY];
@@ -134,12 +134,12 @@ public class Powers : MonoBehaviour
             newUnit = Instantiate(this.gameObject.GetComponent<Structure>().unitToInvoke, new Vector3(boardX, boardY, 0), Quaternion.identity);
             if (this.gameObject.GetComponent<Unit>().playerNum == 1)
             {
-                newUnit.transform.SetParent(gm.GetComponent<GameManager>().player1.transform);
+                newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer1.transform);
                 gm.moneyPlayer1 = gm.moneyPlayer1 - this.gameObject.GetComponent<Structure>().unitToInvoke.GetComponent<Unit>().cost;
             }
             else
             {
-                newUnit.transform.SetParent(gm.GetComponent<GameManager>().player2.transform);
+                newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer2.transform);
                 gm.moneyPlayer2 = gm.moneyPlayer2 - this.gameObject.GetComponent<Structure>().unitToInvoke.GetComponent<Unit>().cost;
             }
             newUnit.GetComponent<Unit>().tileX = boardX;

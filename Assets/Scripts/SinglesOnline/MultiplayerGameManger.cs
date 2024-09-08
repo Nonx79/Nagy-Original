@@ -21,24 +21,19 @@ public class MultiplayerGameManger : GameManager
             UnitUIUpdate();
         }
 
-        if (player1.transform.childCount != intUnits01)
+        if (containerPlayer1.transform.childCount != intUnits01)
         {
             UpdateUnits();
         }
 
-        if (player2.transform.childCount != intUnits02)
+        if (containerPlayer2.transform.childCount != intUnits02)
         {
             UpdateUnits();
         }
 
-        if (purple != null)
+        if (um.purple != null)
         {
             nm.PreparePositionSelectionoptions();
-        }
-        //Online Colors
-        if ((player2Commander == null && player1Commander == null) && canvasWait.enabled == false)
-        {
-
         }
     }
 }

@@ -43,12 +43,12 @@ public class IA : MonoBehaviour
             if (gm.IAPlayer2 == true)
             {
 
-                y = gm.player2.transform.childCount;
+                y = gm.containerPlayer2.transform.childCount;
                 GameObject[] units = new GameObject[y];
                 structures = GameObject.FindGameObjectsWithTag("Structure");
                 for (int i = 0; i < units.Length; i++)
                 {
-                    units[i] = gm.player2.transform.GetChild(i).gameObject;
+                    units[i] = gm.containerPlayer2.transform.GetChild(i).gameObject;
 
                     if (units[i].GetComponent<Unit>().ia == true && units[i].GetComponent<Unit>().waiting == false)
                     {
@@ -80,12 +80,12 @@ public class IA : MonoBehaviour
             if (gm.IAPlayer2 == true)
             {
                 
-                y = gm.player2.transform.childCount;
+                y = gm.containerPlayer2.transform.childCount;
                 GameObject[] units = new GameObject[y];
                 structures = GameObject.FindGameObjectsWithTag("Structure");
                 for (int i = 0; i < units.Length; i++)
                 {
-                    units[i] = gm.player2.transform.GetChild(i).gameObject;
+                    units[i] = gm.containerPlayer2.transform.GetChild(i).gameObject;
 
                     if (units[i].GetComponent<Unit>().ia == true && units[i].GetComponent<Unit>().waiting == false)
                     {
@@ -879,12 +879,12 @@ public class IA : MonoBehaviour
 
         if (gm.GetComponent<GameManager>().currPlayer == 1)
         {
-            newUnit.transform.SetParent(gm.GetComponent<GameManager>().player1.transform);
+            newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer1.transform);
             gm.GetComponent<GameManager>().moneyPlayer1 = gm.GetComponent<GameManager>().moneyPlayer1 - newUnit.GetComponent<Unit>().cost;
         }
         else
         {
-            newUnit.transform.SetParent(gm.GetComponent<GameManager>().player2.transform);
+            newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer2.transform);
             gm.GetComponent<GameManager>().moneyPlayer2 = gm.GetComponent<GameManager>().moneyPlayer2 - newUnit.GetComponent<Unit>().cost;
         }
 

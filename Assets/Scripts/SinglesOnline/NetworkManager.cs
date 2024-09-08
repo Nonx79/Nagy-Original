@@ -12,7 +12,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     private const string MAP = "map";
     private const string POSITION = "position";
     private const int MAXPLAYER = 2;
+    
     public GameManager gm;
+    public UIManager um;
+
     private MapLevel ml;
     bool playerEnter = false;
 
@@ -44,9 +47,10 @@ public class NetworkManager : MonoBehaviourPunCallbacks
     {
         DontDestroyOnLoad(transform.gameObject);
 
-        if (FindObjectOfType<GameManager>() != null && gm == null)
+        if ((FindObjectOfType<GameManager>() != null && gm == null) && (FindObjectOfType<UIManager>() != null && um == null))
         {
             gm = FindObjectOfType<GameManager>();
+            um = FindObjectOfType<UIManager>();
         }
     }
 
@@ -86,14 +90,14 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         PreparePositionSelectionoptions();
         if (PhotonNetwork.CurrentRoom.GetPlayer(1).IsLocal)
         {
-            gm.ShowTeamSelectionScreenFirst();
+            um.ShowTeamSelectionScreenFirst();
             Debug.Log("1 player");
             playerEnter = true;
 
         }
         else if (PhotonNetwork.CurrentRoom.GetPlayer(2).IsLocal)
         {
-            gm.ShowTeamSelectionScreenSecond();
+            um.ShowTeamSelectionScreenSecond();
             playerEnter = true;
         }
     }
@@ -117,7 +121,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                         firstTimePlayerOne = true;
                     }
                     var occupiedPosition = firstPlayer.CustomProperties[POSITION];
-                    gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
+                    um.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
                 }
 
                 //Segundo jugador elige color               
@@ -129,7 +133,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks
                         firstTimePlayerTwo = true;
                     }
                     var occupiedPosition = secondPlayer.CustomProperties[POSITION];
-                    gm.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
+                    um.RestricPositionChoise((ColorOfPlayer)occupiedPosition);
                 }
             }
         }

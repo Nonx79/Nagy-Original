@@ -16,11 +16,11 @@ public class Map02 : MonoBehaviour
 	{
 		GenerateMapData();
 		GenerateMapVisual();
-		positionPlayer11.GetComponent<SpriteRenderer>().color = gm.morado;
-		positionPlayer12.GetComponent<SpriteRenderer>().color = gm.morado;
-		positionPlayer21.GetComponent<SpriteRenderer>().color = gm.rosa;
-		positionPlayer22.GetComponent<SpriteRenderer>().color = gm.rosa;
-		positionPlayer23.GetComponent<SpriteRenderer>().color = gm.rosa;
+		positionPlayer11.GetComponent<SpriteRenderer>().color = gm.um.cPurple;
+		positionPlayer12.GetComponent<SpriteRenderer>().color = gm.um.cPurple;
+		positionPlayer21.GetComponent<SpriteRenderer>().color = gm.um.cPink;
+		positionPlayer22.GetComponent<SpriteRenderer>().color = gm.um.cPink;
+		positionPlayer23.GetComponent<SpriteRenderer>().color = gm.um.cPink;
 	}
 
 	void GenerateMapData()
@@ -286,8 +286,8 @@ public class Map02 : MonoBehaviour
 					obj1.GetComponent<Unit>().ia = true;
 					obj2.GetComponent<Unit>().ia = true;
 				}
-				obj1.transform.SetParent(gm.player1.transform);
-				obj2.transform.SetParent(gm.player1.transform);
+				obj1.transform.SetParent(gm.containerPlayer1.transform);
+				obj2.transform.SetParent(gm.containerPlayer1.transform);
 				
 			}
 			else if (gm.player1Commander.GetComponent<Unit>().faction == 1)
@@ -301,8 +301,8 @@ public class Map02 : MonoBehaviour
 					obj1.GetComponent<Unit>().ia = true;
 					obj2.GetComponent<Unit>().ia = true;
 				}
-				obj1.transform.SetParent(gm.player1.transform);
-				obj2.transform.SetParent(gm.player1.transform);
+				obj1.transform.SetParent(gm.containerPlayer1.transform);
+				obj2.transform.SetParent(gm.containerPlayer1.transform);
 
 				color = gm.colorUnit;				
 			}
@@ -322,9 +322,9 @@ public class Map02 : MonoBehaviour
 					obj4.GetComponent<Unit>().ia = true;
 					obj5.GetComponent<Unit>().ia = true;
 				}
-				obj3.transform.SetParent(gm.player2.transform);
-				obj4.transform.SetParent(gm.player2.transform);
-				obj5.transform.SetParent(gm.player2.transform);
+				obj3.transform.SetParent(gm.containerPlayer2.transform);
+				obj4.transform.SetParent(gm.containerPlayer2.transform);
+				obj5.transform.SetParent(gm.containerPlayer2.transform);
 				color = gm.colorUnit;				
 			}
 
@@ -343,9 +343,9 @@ public class Map02 : MonoBehaviour
 					obj4.GetComponent<Unit>().ia = true;
 					obj5.GetComponent<Unit>().ia = true;
 				}
-				obj3.transform.SetParent(gm.player2.transform);
-				obj4.transform.SetParent(gm.player2.transform);
-				obj5.transform.SetParent(gm.player2.transform);
+				obj3.transform.SetParent(gm.containerPlayer2.transform);
+				obj4.transform.SetParent(gm.containerPlayer2.transform);
+				obj5.transform.SetParent(gm.containerPlayer2.transform);
 
 				color = gm.colorUnit;				
 			}

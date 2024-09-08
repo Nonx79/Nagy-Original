@@ -87,7 +87,7 @@ public abstract class TileMap : MonoBehaviour
     private void Update()
     {
         //If input is left mouse down then select the unit
-        if (Input.GetMouseButtonDown(0) && gm.canvasPlayer1 == null && gm.canvasPlayer2 == null)
+        if (Input.GetMouseButtonDown(0) && gm.um.canvasPlayer1 == null && gm.um.canvasPlayer2 == null)
         {
             if (selectedUnit == null && selectedStructure == null)
             {
@@ -116,12 +116,12 @@ public abstract class TileMap : MonoBehaviour
 
                     if (gm.GetComponent<GameManager>().currPlayer == 1)
                     {
-                        newUnit.transform.SetParent(gm.GetComponent<GameManager>().player1.transform);
+                        newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer1.transform);
                         gm.GetComponent<GameManager>().moneyPlayer1 = gm.GetComponent<GameManager>().moneyPlayer1 - newUnit.GetComponent<Unit>().cost;
                     }
                     else
                     {
-                        newUnit.transform.SetParent(gm.GetComponent<GameManager>().player2.transform);
+                        newUnit.transform.SetParent(gm.GetComponent<GameManager>().containerPlayer2.transform);
                         gm.GetComponent<GameManager>().moneyPlayer2 = gm.GetComponent<GameManager>().moneyPlayer2 - newUnit.GetComponent<Unit>().cost;
                     }
 
