@@ -5,15 +5,27 @@ using UnityEngine;
 
 public class Map02 : MonoBehaviour
 {
+	//Reference
 	public TileMap map;
 	public GameManager gm;
+
+	//Position
 	public GameObject positionPlayer11, positionPlayer12,
 					  positionPlayer21, positionPlayer22, positionPlayer23;
+
+	//Structure
 	public Structure sc;
-	string color;
+
+	//Money
+	int moneyPlayer1 = 1000;
+	int moneyPlayer2 = 1000;
+
+    string color;
 
 	private void Start()
 	{
+		gm = FindObjectOfType<GameManager>();
+
 		GenerateMapData();
 		GenerateMapVisual();
 		positionPlayer11.GetComponent<SpriteRenderer>().color = gm.um.cPurple;
@@ -21,6 +33,9 @@ public class Map02 : MonoBehaviour
 		positionPlayer21.GetComponent<SpriteRenderer>().color = gm.um.cPink;
 		positionPlayer22.GetComponent<SpriteRenderer>().color = gm.um.cPink;
 		positionPlayer23.GetComponent<SpriteRenderer>().color = gm.um.cPink;
+
+		gm.moneyPlayer1 = moneyPlayer1;
+		gm.moneyPlayer2 = moneyPlayer2;
 	}
 
 	void GenerateMapData()

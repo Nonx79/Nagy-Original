@@ -1683,7 +1683,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 226116863}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.8366541, y: 0.14987715}
   m_AnchorMax: {x: 0.904782, y: 0.1965602}
@@ -1945,7 +1945,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 696175596}
   - {fileID: 300749854}
   - {fileID: 194644494}
   - {fileID: 1275362413}
@@ -2121,8 +2120,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 752476110}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2134403625}
+        m_TargetAssemblyTypeName: ComponentsUi, Assembly-CSharp
         m_MethodName: Confirm
         m_Mode: 1
         m_Arguments:
@@ -2451,7 +2450,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 226116863}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.771, y: 0.14987715}
   m_AnchorMax: {x: 0.8366541, y: 0.1965602}
@@ -5732,8 +5731,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 226116863}
-  m_RootOrder: 0
+  m_Father: {fileID: 1008874973}
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.7674361, y: 0.24819903}
   m_AnchorMax: {x: 0.86470646, y: 0.29000002}
@@ -5866,8 +5865,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 752476110}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2134403625}
+        m_TargetAssemblyTypeName: ComponentsUi, Assembly-CSharp
         m_MethodName: Confirm
         m_Mode: 1
         m_Arguments:
@@ -7496,8 +7495,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 752476110}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2134403625}
+        m_TargetAssemblyTypeName: ComponentsUi, Assembly-CSharp
         m_MethodName: MechanicButton
         m_Mode: 1
         m_Arguments:
@@ -8155,7 +8154,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 897137376}
   m_OnClick:
     m_PersistentCalls:
@@ -9004,6 +9003,7 @@ RectTransform:
   - {fileID: 1281440287}
   - {fileID: 1827074202}
   - {fileID: 33257590}
+  - {fileID: 696175596}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10311,7 +10311,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1273260032}
   m_OnClick:
     m_PersistentCalls:
@@ -10397,7 +10397,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 226116863}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.904782, y: 0.14987715}
   m_AnchorMax: {x: 0.97078204, y: 0.1965602}
@@ -11855,7 +11855,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1544213669}
   m_OnClick:
     m_PersistentCalls:
@@ -14313,7 +14313,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1853447543}
   m_OnClick:
     m_PersistentCalls:
@@ -14528,8 +14528,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 752476110}
-        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+      - m_Target: {fileID: 2134403625}
+        m_TargetAssemblyTypeName: ComponentsUi, Assembly-CSharp
         m_MethodName: SniperButton
         m_Mode: 1
         m_Arguments:

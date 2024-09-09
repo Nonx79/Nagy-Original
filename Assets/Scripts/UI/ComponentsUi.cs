@@ -105,6 +105,8 @@ public class ComponentsUi : MonoBehaviour
         //UI healt and power
         gm.UIUnitCurrentHealth = UIUnitCurrentHealth;
         gm.UIUnitPower = UIUnitPower;
+
+        gm.UpdateColors();
     }
 
     //Confirm and back

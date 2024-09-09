@@ -78,6 +78,7 @@ public class UIManager : MonoBehaviourPun
 
     private void Update()
     {
+        DontDestroyOnLoad(transform.gameObject);
         if (FindObjectOfType<GameManager>() != null && gm == null)
         {
             gm = FindObjectOfType<GameManager>();
@@ -85,6 +86,14 @@ public class UIManager : MonoBehaviourPun
             gm.map.positionCommander1.GetComponent<SpriteRenderer>().color = cPurple;
             selectColor2 = cPink;
             gm.map.positionCommander2.GetComponent<SpriteRenderer>().color = cPink;
+            gm.UpdateColors();
+        }
+        if (gm != null)
+        {
+            if (gm.player2Ready == true && gm.player1Ready == true)
+            {
+                canvasWait.enabled = false;
+            }
         }
     }
 
@@ -366,6 +375,11 @@ public class UIManager : MonoBehaviourPun
             {
                 canvasWait.enabled = false;
             }
+            gm.IncomeUpdate();
+            gm.DayUpdate(gm.actualDay);
+            gm.MoneyUpdate();
+            prevClime.text = gm.climes[0];
+            clime.text = gm.climes[0];
         }
         else if (canvasPlayer2.enabled != false && gm.player2Commander != null)
         {
@@ -383,6 +397,11 @@ public class UIManager : MonoBehaviourPun
             {
                 canvasWait.enabled = false;
             }
+            gm.IncomeUpdate();
+            gm.DayUpdate(gm.actualDay);
+            gm.MoneyUpdate();            
+            prevClime.text = gm.climes[0];
+            clime.text = gm.climes[0];
         }
         if ((gm.player2Commander != null && gm.player1Commander != null)
             && canvasWait.enabled == true

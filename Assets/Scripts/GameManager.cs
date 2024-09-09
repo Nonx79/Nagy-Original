@@ -20,8 +20,8 @@ public class GameManager : MonoBehaviourPun
     public GameObject containerPlayer2;
     
     //Player Money
-    public int moneyPlayer1;
-    public int moneyPlayer2;
+    public int moneyPlayer1 = 0;
+    public int moneyPlayer2 = 0;
     public int incomePlayer1;
     public int incomePlayer2;
 
@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviourPun
     public int intUnits01;
     public int intUnits02;
 
-    int actualDay = 1;
+    public int actualDay = 1;
 
     public string colorUnit;
     //int colorUnit;
@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviourPun
 
 
 
-    string[] climes = new string[5] { "Sunny", "Sunny", "Sunny", "Storm", "Rain" };
+    public string[] climes = new string[5] { "Sunny", "Sunny", "Sunny", "Storm", "Rain" };
 
     //Ia
     public bool IAPlayer1 = false;
@@ -114,23 +114,14 @@ public class GameManager : MonoBehaviourPun
         um = FindObjectOfType<UIManager>();
         nm = FindObjectOfType<NetworkManager>();
         c = FindObjectOfType<Camera>();
-        IncomeUpdate();
-        MoneyUpdate();
-        UpdateColors();
-        DayUpdate(actualDay);
-
-        um.prevClime.text = climes[0];
-        um.clime.text = climes[0];
+        //IncomeUpdate();
+        //MoneyUpdate();        
+        //DayUpdate(actualDay);
+        UpdateColors();        
         PhotonNetwork.AutomaticallySyncScene = true;
         
         if (nm.multiplayer == true)
             multiplayer = true;
-
-        //Colors button
-        /*
-        purple.interactable = false;
-        pink.interactable = false;
-        */
     }
 
     public void Update()
@@ -569,7 +560,7 @@ public class GameManager : MonoBehaviourPun
         }
     }
 
-    void DayUpdate(int x)
+    public void DayUpdate(int x)
     {
         if (currPlayer == 1)
         {
