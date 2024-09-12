@@ -6,14 +6,14 @@ using UnityEngine.UI;
 using TMPro;
 
 public class ComponentsUi : MonoBehaviour
-{ 
-    //Refences
-    UIManager um;
-    GameManager gm;
+{    
+    public UIManager um;
+    public GameManager gm;
+    public TileMap tm;
 
-    //UiManager
+    [Header("UiManager")]
     //Canvas
-    public Canvas UIunitCanvas, canvasPlayers,canvasPlayer1, canvasPlayer2, canvasWait; //Canvas online
+    public Canvas UIunitCanvas, canvasPlayers,canvasPlayer1, canvasPlayer2, canvasWait, canvasLoading; //Canvas online
 
     //Texto UI
     public Text day, prevClime, clime, nextClime, //Days
@@ -35,25 +35,33 @@ public class ComponentsUi : MonoBehaviour
 
     //Commanders gameObject
     public GameObject sniperCommander, mechanicCommander;
-
-    //GameManager
+    
+    //[Header("GameManager")]
     public GameObject containerPlayer1, containerPlayer2;
 
     public Text UIUnitCurrentHealth, UIUnitPower;
 
-    private void Awake()
+    [Header("TilemapManager")]
+    public GameObject unitsOnBoard;
+    public GameObject position;
+
+    public void SetDependences()
     {
         um = FindObjectOfType<UIManager>();
         gm = FindObjectOfType<GameManager>();
+        tm = FindObjectOfType<TileMap>();
+    }
 
+    public void StartComponents()
+    {
         //Ui
-
         //Canvas
         um.UIunitCanvas = UIunitCanvas;
         um.canvasPlayers = canvasPlayers;
         um.canvasPlayer1 = canvasPlayer1;
         um.canvasPlayer2 = canvasPlayer2;
         um.canvasWait = canvasWait;
+        um.canvasLoading = canvasLoading;
 
         //Text
         //Days
@@ -107,6 +115,9 @@ public class ComponentsUi : MonoBehaviour
         gm.UIUnitPower = UIUnitPower;
 
         gm.UpdateColors();
+
+        //Tilemap
+        tm.unitsOnBoard = unitsOnBoard;
     }
 
     //Confirm and back

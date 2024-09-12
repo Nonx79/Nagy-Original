@@ -18,6 +18,8 @@ TagManager:
   - Restrictions
   - Camera
   - Position
+  - MiniCamera
+  - Positions
   layers:
   - Default
   - TransparentFX

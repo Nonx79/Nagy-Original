@@ -26,8 +26,8 @@ public abstract class TileMap : MonoBehaviour
 	public int mapSizeX = 20;
 	public int mapSizeY = 10;
 
-	[Header("Units on the board")]
-	public GameObject unitsOnBoard;
+    [Header("Units on the board")]
+    public GameObject unitsOnBoard;
 	public GameObject[] unitsInGame;
 
 	//This 2d array is the list of tile gameObjects on the board
@@ -73,17 +73,18 @@ public abstract class TileMap : MonoBehaviour
 	public GameObject fire;
 
 	//Start
-    void Start()
+    protected virtual void Awake()
     {
+		normalCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
+		minimap = GameObject.FindWithTag("MiniCamera").GetComponent<Camera>();
         Application.targetFrameRate = 60;
         normalCamera.transform.position = new Vector3(mapSizeX / 2, mapSizeY / 2f, -10);
         minimap.transform.position = new Vector3(mapSizeX / 2, mapSizeY / 2, -10);
-        GeneratePathfindingGraph();
-        SetIfTileIsOccupied();
+        GeneratePathfindingGraph();        
         positionSoldiers = GameObject.FindGameObjectsWithTag("Position");
     }
 
-	//manejo de mouse
+	//Mouse
     private void Update()
     {
         //If input is left mouse down then select the unit
@@ -885,83 +886,178 @@ public abstract class TileMap : MonoBehaviour
         }
 		ClickableTile ct = gm.tileBeingDisplayed.GetComponent<ClickableTile>();
 		//Nada
-		if (ct.unitOnTile == null && ct.structureOnTile == null)
-			Debug.Log("Nada");
-
-		//Select Unit
-		else if (ct.unitOnTile != null && ct.unitOnTile.GetComponent<Unit>().waiting == false
-				&& ct.unitOnTile.GetComponent<Unit>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+		
+		if (gm.multiplayer = true)
 		{
-			GameObject unitOnSelect = GetUnitOnSquare(coords);
-			SetSelectedUnit(coords);
-			selectedUnit.GetComponent<Unit>().setMovementState(1);
-			Debug.Log("Unidad seleccionada");
-			highlightUnitRange();                                                                   
-
-			switch (selectedUnit.name)
+			if (!gm || gm.CanPerformMove())
 			{
-				case "mSniperCommander":
-				case "mSniperCommander(Clone)":
-					buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Concentration";
-					buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().Concentration());
-					break;
-				case "pMechanicCommander":
-				case "pMechanicCommander(Clone)":
-					buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Scream";
-					buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().Concentration());
-					break;
-				case "mInvokeMachine(Clone)":
-					buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Invoke";
-					buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().InvokeMachineButton());
-					break;
-				default:
-					buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Power";
-					break;
-			}
+                if (ct.unitOnTile == null && ct.structureOnTile == null)
+                    Debug.Log("Nada");
 
-		}
+                //Select Unit
+                else if (ct.unitOnTile != null && ct.unitOnTile.GetComponent<Unit>().waiting == false
+                && ct.unitOnTile.GetComponent<Unit>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+                {
+                    GameObject unitOnSelect = GetUnitOnSquare(coords);
+                    SetSelectedUnit(coords);
+                    selectedUnit.GetComponent<Unit>().setMovementState(1);
+                    Debug.Log("Unidad seleccionada");
+                    highlightUnitRange();
 
-		//Select Structure
-		else if (ct.structureOnTile != null && ct.structureOnTile.GetComponent<Structure>().playerNum == gm.GetComponent<GameManager>().currPlayer
-				&& ct.structureOnTile.GetComponent<Structure>().waiting == false)
-		{
-			switch (ct.structureOnTile.name)
+                    switch (selectedUnit.name)
+                    {
+                        case "mSniperCommander":
+                        case "mSniperCommander(Clone)":
+                            buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Concentration";
+                            buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().Concentration());
+                            break;
+                        case "pMechanicCommander":
+                        case "pMechanicCommander(Clone)":
+                            buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Scream";
+                            buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().Concentration());
+                            break;
+                        case "mInvokeMachine(Clone)":
+                            buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Invoke";
+                            buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().InvokeMachineButton());
+                            break;
+                        default:
+                            buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Power";
+                            break;
+                    }
+
+                }
+
+                //Select Structure
+                else if (ct.structureOnTile != null && ct.structureOnTile.GetComponent<Structure>().playerNum == gm.GetComponent<GameManager>().currPlayer
+                        && ct.structureOnTile.GetComponent<Structure>().waiting == false)
+                {
+                    switch (ct.structureOnTile.name)
+                    {
+                        case "Mine":
+                            Debug.Log("Mine");
+                            break;
+                        case "Cuartel":
+                            ct.structureOnTile.GetComponent<Structure>().UpdateMoney();
+                            if (ct.structureOnTile.GetComponent<Structure>().faction == 0)
+                                ct.structureOnTile.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
+                            else if (ct.structureOnTile.GetComponent<Structure>().faction == 1)
+                                ct.structureOnTile.transform.GetChild(1).GetComponent<Canvas>().enabled = true;
+                            else if (ct.structureOnTile.GetComponent<Structure>().faction == 2)
+                                ct.structureOnTile.transform.GetChild(2).GetComponent<Canvas>().enabled = true;
+                            //DisableCollider();
+                            selectedStructure = ct.structureOnTile;
+                            break;
+                        case "PrimaryStructure":
+                            Debug.Log("Princpal");
+                            break;
+                        default:
+                            Debug.Log("???");
+                            break;
+                    }
+                }
+                //Aliado
+                else if (ct.unitOnTile.GetComponent<Unit>().waiting == true && ct.unitOnTile.GetComponent<Unit>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+                {
+                    highlightUnitOnTileRange();
+                    Debug.Log("Aliado");
+                }
+                //Enemigo
+                else if (ct.unitOnTile.GetComponent<Unit>().playerNum != gm.GetComponent<GameManager>().currPlayer)
+                {
+                    highlightUnitOnTileRange();
+                    Debug.Log("Enemy");
+                }
+            }
+			else
 			{
-				case "Mine":
-					Debug.Log("Mine");
-					break;
-				case "Cuartel":
-					ct.structureOnTile.GetComponent<Structure>().UpdateMoney();
-					if (ct.structureOnTile.GetComponent<Structure>().faction == 0)
-						ct.structureOnTile.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
-					else if (ct.structureOnTile.GetComponent<Structure>().faction == 1)
-						ct.structureOnTile.transform.GetChild(1).GetComponent<Canvas>().enabled = true;
-					else if (ct.structureOnTile.GetComponent<Structure>().faction == 2)
-						ct.structureOnTile.transform.GetChild(2).GetComponent<Canvas>().enabled = true;
-					//DisableCollider();
-					selectedStructure = ct.structureOnTile;
-					break;
-				case "PrimaryStructure":
-					Debug.Log("Princpal");
-					break;
-				default:
-					Debug.Log("???");
-					break;
-			}
+				//Enemigo
+				if (ct.unitOnTile.GetComponent<Unit>().playerNum != gm.GetComponent<GameManager>().currPlayer)
+                {
+                    highlightUnitOnTileRange();
+                    Debug.Log("Enemy");
+                }
+            }
 		}
-		//Aliado
-		else if (ct.unitOnTile.GetComponent<Unit>().waiting == true && ct.unitOnTile.GetComponent<Unit>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+		else
 		{
-			highlightUnitOnTileRange();
-			Debug.Log("Aliado");
-		}
-		//Enemigo
-		else if (ct.unitOnTile.GetComponent<Unit>().playerNum != gm.GetComponent<GameManager>().currPlayer)
-		{
-			highlightUnitOnTileRange();
-			Debug.Log("Enemy");
-		}
+            if (ct.unitOnTile == null && ct.structureOnTile == null)
+                Debug.Log("Nada");
 
+            //Select Unit
+            else if (ct.unitOnTile != null && ct.unitOnTile.GetComponent<Unit>().waiting == false
+                && ct.unitOnTile.GetComponent<Unit>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+            {
+                GameObject unitOnSelect = GetUnitOnSquare(coords);
+                SetSelectedUnit(coords);
+                selectedUnit.GetComponent<Unit>().setMovementState(1);
+                Debug.Log("Unidad seleccionada");
+                highlightUnitRange();
+
+                switch (selectedUnit.name)
+                {
+                    case "mSniperCommander":
+                    case "mSniperCommander(Clone)":
+                        buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Concentration";
+                        buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().Concentration());
+                        break;
+                    case "pMechanicCommander":
+                    case "pMechanicCommander(Clone)":
+                        buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Scream";
+                        buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().Concentration());
+                        break;
+                    case "mInvokeMachine(Clone)":
+                        buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Invoke";
+                        buttonPower.GetComponent<Button>().onClick.AddListener(() => selectedUnit.GetComponent<Powers>().InvokeMachineButton());
+                        break;
+                    default:
+                        buttonPower.transform.GetChild(0).GetComponent<Text>().text = "Power";
+                        break;
+                }
+
+            }
+
+            //Select Structure
+            else if (ct.structureOnTile != null && ct.structureOnTile.GetComponent<Structure>().playerNum == gm.GetComponent<GameManager>().currPlayer
+                    && ct.structureOnTile.GetComponent<Structure>().waiting == false)
+            {
+                switch (ct.structureOnTile.name)
+                {
+                    case "Mine":
+                        Debug.Log("Mine");
+                        break;
+                    case "Cuartel":
+                        ct.structureOnTile.GetComponent<Structure>().UpdateMoney();
+                        if (ct.structureOnTile.GetComponent<Structure>().faction == 0)
+                            ct.structureOnTile.transform.GetChild(0).GetComponent<Canvas>().enabled = true;
+                        else if (ct.structureOnTile.GetComponent<Structure>().faction == 1)
+                            ct.structureOnTile.transform.GetChild(1).GetComponent<Canvas>().enabled = true;
+                        else if (ct.structureOnTile.GetComponent<Structure>().faction == 2)
+                            ct.structureOnTile.transform.GetChild(2).GetComponent<Canvas>().enabled = true;
+                        //DisableCollider();
+                        selectedStructure = ct.structureOnTile;
+                        break;
+                    case "PrimaryStructure":
+                        Debug.Log("Princpal");
+                        break;
+                    default:
+                        Debug.Log("???");
+                        break;
+                }
+            }
+            //Aliado
+            else if (ct.unitOnTile.GetComponent<Unit>().waiting == true && ct.unitOnTile.GetComponent<Unit>().playerNum == gm.GetComponent<GameManager>().currPlayer)
+            {
+                highlightUnitOnTileRange();
+                Debug.Log("Aliado");
+            }
+
+            //Enemigo
+            else if (ct.unitOnTile.GetComponent<Unit>().playerNum != gm.GetComponent<GameManager>().currPlayer)
+            {
+                highlightUnitOnTileRange();
+                Debug.Log("Enemy");
+            }
+        }
 	}
 
 	public void highlightUnitOnTileRange()

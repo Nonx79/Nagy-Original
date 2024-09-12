@@ -11,7 +11,7 @@ using ExitGames.Client.Photon;
 using Photon.Realtime;
 using System.ComponentModel;
 
-public class GameManager : MonoBehaviourPun
+public abstract class GameManager : MonoBehaviourPun
 {
     //Players
     public int currPlayer = 1;
@@ -108,8 +108,20 @@ public class GameManager : MonoBehaviourPun
 
     //chatgpt
     private bool objectUsed = false;
-   
-    private void Awake()
+    
+    protected enum GameState { Init, Play, Finished }
+    protected GameState state;
+    protected abstract void SetGameState(GameState state);
+    public abstract void TryToStartCurrentGame();
+    public abstract bool CanPerformMove();
+
+    internal bool IsGameInProgress()
+    {
+        return state == GameState.Play;
+    }
+
+
+    protected virtual void Awake()
     {
         um = FindObjectOfType<UIManager>();
         nm = FindObjectOfType<NetworkManager>();
@@ -119,14 +131,13 @@ public class GameManager : MonoBehaviourPun
         //DayUpdate(actualDay);
         UpdateColors();        
         PhotonNetwork.AutomaticallySyncScene = true;
-        
+
         if (nm.multiplayer == true)
             multiplayer = true;
     }
 
-    public void Update()
+    public virtual void Update()
     {
-        Debug.Log("penes");
         ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out hit))
         {
@@ -134,15 +145,25 @@ public class GameManager : MonoBehaviourPun
             UnitUIUpdate();
         }
 
-        if (containerPlayer1.transform.childCount != intUnits01)
+        if (containerPlayer1 != null && containerPlayer2 != null)
         {
-            UpdateUnits();
-        }
+            if (containerPlayer1.transform.childCount != intUnits01)
+                UpdateUnits();
 
-        if (containerPlayer2.transform.childCount != intUnits02)
-        {
-            UpdateUnits();
+            if (containerPlayer2.transform.childCount != intUnits02)
+                UpdateUnits();
         }
+        
+        if (um.purple != null)  
+            nm.PreparePositionSelectionoptions();        
+    }
+
+    public void StartNewGame()
+    {
+        //um.OnGameStarted();
+        SetGameState(GameState.Init);
+        currPlayer = 1;
+        TryToStartCurrentGame();
     }
 
     public void EndTurn()
@@ -374,7 +395,7 @@ public class GameManager : MonoBehaviourPun
                                 UIUnitPower.text = highlightedUnitScript.power.ToString() + "/" + highlightedUnitScript.maxPower.ToString();
                         }
                     }
-                    else
+                    else if (hit.transform.GetComponent<ClickableTile>().structureOnTile != null)
                     {
                         structureBeingDisplayed = hit.transform.GetComponent<ClickableTile>().structureOnTile;
                         UIUnitCurrentHealth.text = structureBeingDisplayed.GetComponent<Structure>().currHp.ToString();

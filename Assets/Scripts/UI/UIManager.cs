@@ -31,6 +31,7 @@ public class UIManager : MonoBehaviourPun
     public Canvas canvasPlayer2;
     public Canvas canvasWait; //Canvas online
     public TMP_Dropdown gameMapSelection;
+    public Canvas canvasLoading;
 
     //Texto UI
     public Text day, prevClime, clime, nextClime, //Days
@@ -65,6 +66,9 @@ public class UIManager : MonoBehaviourPun
     //Sync of ready
     private const byte MarkObjectEvent = 1;
 
+    //Positions
+    GameObject[] positions;
+
     private void Awake()
     {
         nm = FindObjectOfType<NetworkManager>();
@@ -83,16 +87,25 @@ public class UIManager : MonoBehaviourPun
         {
             gm = FindObjectOfType<GameManager>();
             selectColor1 = cPurple;
-            gm.map.positionCommander1.GetComponent<SpriteRenderer>().color = cPurple;
+            positions = GameObject.FindGameObjectsWithTag("Position");
+            foreach (GameObject pos in positions)
+            {
+                if (pos.name == "PositionPlayer1Commander")
+                    pos.GetComponent<SpriteRenderer>().color = cPurple;
+                if (pos.name == "PositionPlayer2Commander")
+                    pos.GetComponent<SpriteRenderer>().color = cPink;
+            }
             selectColor2 = cPink;
-            gm.map.positionCommander2.GetComponent<SpriteRenderer>().color = cPink;
             gm.UpdateColors();
         }
+
         if (gm != null)
         {
             if (gm.player2Ready == true && gm.player1Ready == true)
             {
                 canvasWait.enabled = false;
+                InitializeGame();
+                gm.player1Ready = false;
             }
         }
     }
@@ -406,66 +419,73 @@ public class UIManager : MonoBehaviourPun
         if ((gm.player2Commander != null && gm.player1Commander != null)
             && canvasWait.enabled == true
             )
+        {            
+        }
+    }
+
+    public void InitializeGame()
+    {
+        Destroy(canvasPlayer1.transform.gameObject);
+        Destroy(canvasPlayer2.transform.gameObject);
+        Destroy(canvasPlayers.transform.gameObject);
+        Destroy(canvasWait.transform.gameObject);
+
+        GameObject obj1 = Instantiate(gm.player1Commander, gm.map.positionCommander1.transform.position, Quaternion.identity);
+        GameObject obj2 = Instantiate(gm.player2Commander, gm.map.positionCommander2.transform.position, Quaternion.identity);
+
+        UnityEngine.Debug.Log("Crea unidades! " + gm.player1Commander + "" + gm.player2Commander);
+
+        Destroy(gm.map.positionCommander1);
+        Destroy(gm.map.positionCommander2);
+
+        obj1.GetComponent<Unit>().playerNum = 1;
+        if (gm.IAPlayer1 == true)
         {
-            Destroy(canvasPlayer1.transform.gameObject);
-            Destroy(canvasPlayer2.transform.gameObject);
-            Destroy(canvasPlayers.transform.gameObject);
+            obj1.GetComponent<Unit>().ia = true;
+        }
+        obj1.transform.SetParent(gm.containerPlayer1.transform);
+        obj2.GetComponent<Unit>().playerNum = 2;
+        if (gm.IAPlayer2 == true)
+        {
+            obj2.GetComponent<Unit>().ia = true;
+        }
+        obj2.transform.SetParent(gm.containerPlayer2.transform);
 
-            GameObject obj1 = Instantiate(gm.player1Commander, gm.map.positionCommander1.transform.position, Quaternion.identity);
-            GameObject obj2 = Instantiate(gm.player2Commander, gm.map.positionCommander2.transform.position, Quaternion.identity);
+        GameObject[] structures = GameObject.FindGameObjectsWithTag("Structure");
+        foreach (GameObject s in structures)
+        {
+            if (s.GetComponent<Structure>().playerNum == 1)
+                s.GetComponent<Structure>().faction = gm.player1Commander.GetComponent<Unit>().faction;
+            else if (s.GetComponent<Structure>().playerNum == 2)
+                s.GetComponent<Structure>().faction = gm.player2Commander.GetComponent<Unit>().faction;
+        }
 
-            UnityEngine.Debug.Log("Crea unidades! " + gm.player1Commander + "" + gm.player2Commander);
+        gm.creation = true;
+        gm.UpdateColors();
+        heart1.color = selectColor1;
+        heart2.color = selectColor1;
+        face1.color = selectColor1;
+        face2.color = selectColor1;
+        sword1.color = selectColor1;
+        sword2.color = selectColor2;
+        unitsCount01.color = selectColor1;
+        unitsCount02.color = selectColor2;
 
-            Destroy(gm.map.positionCommander1);
-            Destroy(gm.map.positionCommander2);
+        gm.map.SetIfTileIsOccupied();
 
-            obj1.GetComponent<Unit>().playerNum = 1;
-            if (gm.IAPlayer1 == true)
-            {
-                obj1.GetComponent<Unit>().ia = true;
-            }
-            obj1.transform.SetParent(gm.containerPlayer1.transform);
-            obj2.GetComponent<Unit>().playerNum = 2;
-            if (gm.IAPlayer2 == true)
-            {
-                obj2.GetComponent<Unit>().ia = true;
-            }
-            obj2.transform.SetParent(gm.containerPlayer2.transform);
+        if (obj1.GetComponent<Unit>().ia == true)
+        {
+            gm.ia.StartTurn();
+        }
 
-            GameObject[] structures = GameObject.FindGameObjectsWithTag("Structure");
-            foreach (GameObject s in structures)
-            {
-                if (s.GetComponent<Structure>().playerNum == 1)
-                    s.GetComponent<Structure>().faction = gm.player1Commander.GetComponent<Unit>().faction;
-                else if (s.GetComponent<Structure>().playerNum == 2)
-                    s.GetComponent<Structure>().faction = gm.player2Commander.GetComponent<Unit>().faction;
-            }
-
-            gm.creation = true;
-            gm.UpdateColors();
-            heart1.color = selectColor1;
-            heart2.color = selectColor1;
-            face1.color = selectColor1;
-            face2.color = selectColor1;
-            sword1.color = selectColor1;
-            sword2.color = selectColor2;
-            unitsCount01.color = selectColor1;
-            unitsCount02.color = selectColor2;
-
-            if (obj1.GetComponent<Unit>().ia == true)
-            {
-                gm.ia.StartTurn();
-            }
-
-            switch (gm.player1Commander.GetComponent<Unit>().faction)
-            {
-                case 0:
-                    gm.track1.GetComponent<AudioSource>().enabled = true;
-                    break;
-                case 1:
-                    gm.track2.GetComponent<AudioSource>().enabled = true;
-                    break;
-            }
+        switch (gm.player1Commander.GetComponent<Unit>().faction)
+        {
+            case 0:
+                gm.track1.GetComponent<AudioSource>().enabled = true;
+                break;
+            case 1:
+                gm.track2.GetComponent<AudioSource>().enabled = true;
+                break;
         }
     }
 
@@ -495,9 +515,13 @@ public class UIManager : MonoBehaviourPun
     {
         if (photonEvent.Code == MarkObjectEvent)
         {
-            // Lógica para manejar el evento
-            gm.player1Ready = (bool)photonEvent.CustomData;
-            gm.player2Ready = (bool)photonEvent.CustomData;
+
+            if (gm != null)
+            {
+                // Lógica para manejar el evento
+                gm.player1Ready = (bool)photonEvent.CustomData;
+                gm.player2Ready = (bool)photonEvent.CustomData;
+            }
         }
     }
     public void RestricPositionChoise(ColorOfPlayer occupiedPosition)

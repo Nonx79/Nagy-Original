@@ -13,6 +13,9 @@ public class Map02 : MonoBehaviour
 	public GameObject positionPlayer11, positionPlayer12,
 					  positionPlayer21, positionPlayer22, positionPlayer23;
 
+	public GameObject position;
+	public SpriteRenderer[] positionArray;
+
 	//Structure
 	public Structure sc;
 
@@ -26,13 +29,20 @@ public class Map02 : MonoBehaviour
 	{
 		gm = FindObjectOfType<GameManager>();
 
+		position = GameObject.FindGameObjectWithTag("Positions");
+
+		positionArray = position.GetComponentsInChildren<SpriteRenderer>();
+
+		foreach (SpriteRenderer pos in positionArray)
+		{
+			if (pos.name == "1")			
+				pos.GetComponent<SpriteRenderer>().color = gm.um.cPurple;            
+			else if (pos.name == "2") 
+				pos.GetComponent<SpriteRenderer>().color = gm.um.cPink;
+        }
+
 		GenerateMapData();
 		GenerateMapVisual();
-		positionPlayer11.GetComponent<SpriteRenderer>().color = gm.um.cPurple;
-		positionPlayer12.GetComponent<SpriteRenderer>().color = gm.um.cPurple;
-		positionPlayer21.GetComponent<SpriteRenderer>().color = gm.um.cPink;
-		positionPlayer22.GetComponent<SpriteRenderer>().color = gm.um.cPink;
-		positionPlayer23.GetComponent<SpriteRenderer>().color = gm.um.cPink;
 
 		gm.moneyPlayer1 = moneyPlayer1;
 		gm.moneyPlayer2 = moneyPlayer2;
