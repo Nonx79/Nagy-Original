@@ -16042,6 +16042,9 @@ MonoBehaviour:
   UIUnitPower: {fileID: 1129786180}
   unitsOnBoard: {fileID: 141520076}
   position: {fileID: 0}
+  positions: []
+  positionCommander1: {fileID: 201198877}
+  positionCommander2: {fileID: 1893932047}
 --- !u!4 &2134403626
 Transform:
   m_ObjectHideFlags: 0

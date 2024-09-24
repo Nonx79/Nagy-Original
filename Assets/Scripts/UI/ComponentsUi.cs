@@ -44,6 +44,10 @@ public class ComponentsUi : MonoBehaviour
     [Header("TilemapManager")]
     public GameObject unitsOnBoard;
     public GameObject position;
+    public GameObject[] positions;
+    public GameObject positionCommander1;
+    public GameObject positionCommander2;
+
 
     public void SetDependences()
     {
@@ -117,6 +121,24 @@ public class ComponentsUi : MonoBehaviour
         gm.UpdateColors();
 
         //Tilemap
+        /*
+        for (int i = 0; i < positions.Length; i++)
+        {
+            foreach (GameObject pos in positions)
+            {
+                if (pos.name == "1")
+                {
+                    if (positions[i] != null)
+                    {
+                        tm.po = pos;
+                        positions[i].
+                    }
+                }
+            }
+        }*/
+
+        tm.positionCommander1 = positionCommander1;
+        tm.positionCommander2 = positionCommander2;
         tm.unitsOnBoard = unitsOnBoard;
     }
 

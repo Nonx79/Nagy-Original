@@ -12,7 +12,7 @@ using UnityEngine.SocialPlatforms;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
-using System.Diagnostics;
+//using System.Diagnostics;
 using Unity.VisualScripting;
 using static NetworkManager;
 using System.ComponentModel;
@@ -69,6 +69,8 @@ public class UIManager : MonoBehaviourPun
     //Positions
     GameObject[] positions;
 
+    bool startGame;
+
     private void Awake()
     {
         nm = FindObjectOfType<NetworkManager>();
@@ -101,11 +103,11 @@ public class UIManager : MonoBehaviourPun
 
         if (gm != null)
         {
-            if (gm.player2Ready == true && gm.player1Ready == true)
+            if (gm.player2Ready == true && gm.player1Ready == true && startGame == false)
             {
-                canvasWait.enabled = false;
                 InitializeGame();
-                gm.player1Ready = false;
+                Debug.LogError("Initializanding");
+                startGame = true;               
             }
         }
     }
@@ -230,7 +232,7 @@ public class UIManager : MonoBehaviourPun
     {
         if (canvasPlayer1.enabled != false)
         {
-            selectColor1 = cYellow;
+            selectColor1 = cYellow; 
             gm.map.positionCommander1.GetComponent<SpriteRenderer>().color = cYellow;
             foreach (GameObject pUnit in gm.map.positionSoldiers)
             {
@@ -379,7 +381,10 @@ public class UIManager : MonoBehaviourPun
             }
             gm.colorUnit = "Purple";
 
-            PhotonNetwork.RaiseEvent(MarkObjectEvent, gm.player1Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
+            object[] content = new object[] { gm.player1Ready, gm.player2Ready };
+            PhotonNetwork.RaiseEvent(MarkObjectEvent, content, RaiseEventOptions.Default, SendOptions.SendReliable);
+        
+            //PhotonNetwork.RaiseEvent(MarkObjectEvent, gm.player1Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
 
             UnityEngine.Debug.Log("Player 2 ready: " + gm.player2Ready);
 
@@ -402,9 +407,13 @@ public class UIManager : MonoBehaviourPun
             gm.player2Ready = true;
             canvasWait.enabled = true;
 
-            PhotonNetwork.RaiseEvent(MarkObjectEvent, gm.player2Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
+            //PhotonNetwork.RaiseEvent(MarkObjectEvent, gm.player2Ready, RaiseEventOptions.Default, SendOptions.SendReliable);
 
-            UnityEngine.Debug.Log("Player 1 ready: " + gm.player1Ready);
+            object[] content = new object[] { gm.player1Ready, gm.player2Ready };
+            PhotonNetwork.RaiseEvent(MarkObjectEvent, content, RaiseEventOptions.Default, SendOptions.SendReliable);
+        
+
+        UnityEngine.Debug.Log("Player 1 ready: " + gm.player1Ready);
 
             if (gm.player2Ready == true && gm.player1Ready == true)
             {
@@ -425,10 +434,13 @@ public class UIManager : MonoBehaviourPun
 
     public void InitializeGame()
     {
-        Destroy(canvasPlayer1.transform.gameObject);
-        Destroy(canvasPlayer2.transform.gameObject);
-        Destroy(canvasPlayers.transform.gameObject);
-        Destroy(canvasWait.transform.gameObject);
+        //Destroy(canvasPlayer1.transform.gameObject);
+        // Destroy(canvasPlayer2.transform.gameObject);
+        // Destroy(canvasPlayers.transform.gameObject);
+        //Destroy(canvasWait.transform.gameObject);
+        canvasPlayer1.enabled = false;
+        canvasPlayer2.enabled = false;
+        canvasPlayers.enabled = false;
 
         GameObject obj1 = Instantiate(gm.player1Commander, gm.map.positionCommander1.transform.position, Quaternion.identity);
         GameObject obj2 = Instantiate(gm.player2Commander, gm.map.positionCommander2.transform.position, Quaternion.identity);
@@ -511,6 +523,7 @@ public class UIManager : MonoBehaviourPun
         canvasPlayer1.enabled = false;
     }
     //Online ready real time
+    /*
     void OnEvent(EventData photonEvent)
     {
         if (photonEvent.Code == MarkObjectEvent)
@@ -521,6 +534,23 @@ public class UIManager : MonoBehaviourPun
                 // Lógica para manejar el evento
                 gm.player1Ready = (bool)photonEvent.CustomData;
                 gm.player2Ready = (bool)photonEvent.CustomData;
+            }
+        }
+    }
+    */
+    void OnEvent(EventData photonEvent)
+    {
+        if (photonEvent.Code == MarkObjectEvent)
+        {
+            if (gm != null)
+            {
+                // Asegúrate de que CustomData sea del tipo esperado antes de hacer el cast.
+                if (photonEvent.CustomData is object[] data && data.Length == 2)
+                {
+                    // Cast correcto a bool
+                    gm.player1Ready = (bool)data[0];
+                    gm.player2Ready = (bool)data[1];
+                }
             }
         }
     }

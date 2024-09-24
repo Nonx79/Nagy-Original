@@ -81,7 +81,7 @@ public class MultiplayerGameManger : GameManager, IOnEventCallback
         if (eventCode == SET_GAME_STATE_EVENT_CODE)
         {
             // Verificamos si los datos son un array de object[]
-            if (photonEvent.CustomData is object[] data)
+            if (photonEvent.CustomData is object[] data && data.Length > 0)
             {
                 // Si los datos son del tipo esperado, procedemos con la lógica
                 GameState state = (GameState)data[0];
